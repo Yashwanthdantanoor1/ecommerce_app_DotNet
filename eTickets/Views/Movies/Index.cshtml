@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Movie>
+@{
+    ViewData["Title"] = "Movies";
+}
+ <div class="row row-cols-1 row-cols-md-3">
+@foreach(var item in Model)
+{
+<div class="col mb-4">
+<div class="card h-100" style="width: 20rem;">
+    <img src="@item.ImageURL" class="card-img-top" alt="..." style="max-width: 320px; max-height:310px" >
+  <div class="card-body">
+    <h5 class="card-title">@item.Name 
+        <a class="test-black float-right"><i class="bg bi-pencil-square"></i></a>
+    </h5>
+    <p class="card-text">@item.Description</p>
+    <p class="card-text"><b>Status:</b>
+                        @if (DateTime.Now >= item.StartDate && DateTime.Now <= item.EndDate)
+                        {
+                            <span class="badge bg-success text-white">AVAILABLE</span>
+                        }
+                        else if(DateTime.Now>item.EndDate)
+                        {
+                            <span class="badge bg-danger text-white">EXPIRED</span>
+                        }
+                        else
+                        {
+                             <span class="badge bg-primary text-white">UPCOMING</span>
+                        }
+                    </p>
+                </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><b>Cinema:</b> @item.Cinema.Name</li>
+    <li class="list-group-item"><b>Start Date:</b> @item.StartDate.ToString("dd MMM yy")</li>
+    <li class="list-group-item"><b>End Date:</b> @item.EndDate.ToString("dd MMM yy")</li>
+    <li class="list-group-item"><b>Category:</b> @item.MovieCategory</li>
+  </ul>
+  <div class="card-footer">
+    <a class="btn btn-outline-primary" style="margin:5px"><i class="bi bi-eye"></i> Details</a> 
+    <a class="btn btn-success float-right"><i class="bi bi-cart-plus"></i> Add to Cart @item.Price.ToString("c")</a>
+  </div>
+</div>
+</div>
+}
+</div>
